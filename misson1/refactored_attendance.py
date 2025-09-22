@@ -26,12 +26,6 @@ class Grade(Enum):
 THRESHOLD_GOLD = 50
 THRESHOLD_SILVER = 30
 
-def parse_line(line: str):
-    parts = line.strip().split()
-    if len(parts) == 2:
-        return parts[0], parts[1]
-    return None, None
-
 def update_basic_info(attendance_info, name, weekday):
     if name not in attendance_info:
         attendance_info[name] = {
@@ -73,6 +67,12 @@ def get_removed_player(attendance_info):
             player["weekend_count"] == 0):
             removed.append(name)
     return removed
+
+def parse_line(line: str):
+    parts = line.strip().split()
+    if len(parts) == 2:
+        return parts[0], parts[1]
+    return None, None
 
 def load_file(file_name: str):
     attendance_info = {}
