@@ -59,10 +59,10 @@ def update_grade_info(player):
     else:
         player["grade"] = Grade.NORMAL.value
 
-def get_removed_player(attendance_info):
+def get_removed_players(attendance_info):
     removed = []
     for name, player in attendance_info.items():
-        if (player["grade"] == 0 and
+        if (player["grade"] == Grade.NORMAL.value and
             player["wednesday_count"] == 0 and
             player["weekend_count"] == 0):
             removed.append(name)
@@ -101,7 +101,7 @@ def print_each_player_grade(name, player_data):
 def print_removed_player(attendance_info):
     print("\nRemoved player")
     print("==============")
-    for name in get_removed_player(attendance_info):
+    for name in get_removed_players(attendance_info):
         print(name)
 
 def print_result(attendance_info):

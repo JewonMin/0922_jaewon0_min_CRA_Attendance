@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import Dict
 from enum import Enum
 
 class Grade(Enum):
@@ -25,3 +25,22 @@ class Player:
     grade: int = Grade.NORMAL.value
 
     @property
+    def wednesday_count(self) -> int:
+        return self.days["wednesday"]
+    @property
+    def weekend_count(self) -> int:
+        return self.days["saturday"] + self.days["sunday"]
+
+@dataclass
+class AttendanceInfo:
+    players: Dict[str, Player] = field(
+        default_factory=lambda: {}
+    )
+    def get(self, name:str) -> Player:
+        if name not in self.players:
+            self.players[name] = Player(name=name)
+        return self.players[name]
+
+
+
+
