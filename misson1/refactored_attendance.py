@@ -65,8 +65,14 @@ def get_grade_info(player):
     else:
         player["grade"] = Grade.NORMAL.value
 
-
-
+def get_removed_player(attendance_info):
+    removed = []
+    for name, player in attendance_info.items():
+        if (player["grade"] == 0 and
+            player["wednesday_count"] == 0 and
+            player["weekend_count"] == 0):
+            removed.append(name)
+    return removed
 
 def load_file(file_name: str):
     attendance_info = {}
@@ -85,7 +91,25 @@ def load_file(file_name: str):
         print("파일을 찾을 수 없습니다.")
         return {}
 
+def print_each_player_grade(name, player_data):
+    grade_name = \
+        {Grade.NORMAL.value: "NORMAL",
+         Grade.GOLD.value: "GOLD",
+         Grade.SILVER.value: "SILVER"}[player_data["grade"]]
+    print(f"NAME: {name}, POINT: {player_data['points']}, GRADE: {grade_name}")
+
+def print_removed_player(attendance_info):
+    print("\nRemoved player")
+    print("==============")
+    for name in get_removed_player(attendance_info):
+        print(name)
+
+def print_result(attendance_info):
+    for name, player_data in attendance_info.items():
+        print_each_player_grade(name,player_data)
+    print_removed_player(attendance_info)
+
 
 if __name__ == "__main__":
-    data = load_file("attendance_weekday_500.txt")
-    #print_result(data)
+    info = load_file("attendance_weekday_500.txt")
+    print_result(info)
