@@ -51,7 +51,7 @@ def update_bonus_info(player):
     if player["days"][POINTS_MAP[Day.SATURDAY][0]] + player["days"][POINTS_MAP[Day.SUNDAY][0]] > 9:
         player["points"] += 10
 
-def get_grade_info(player):
+def update_grade_info(player):
     if player["points"] >= THRESHOLD_GOLD:
         player["grade"] = Grade.GOLD.value
     elif player["points"] >= THRESHOLD_SILVER:
@@ -84,7 +84,7 @@ def load_file(file_name: str):
                     update_basic_info(attendance_info, name, weekday)
         for player in attendance_info.values():
             update_bonus_info(player)
-            get_grade_info(player)
+            update_grade_info(player)
         return attendance_info
 
     except FileNotFoundError:
