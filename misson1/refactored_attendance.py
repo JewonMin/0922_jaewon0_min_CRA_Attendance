@@ -74,7 +74,7 @@ def parse_line(line: str):
         return parts[0], parts[1]
     return None, None
 
-def load_file(file_name: str):
+def process_file(file_name: str):
     attendance_info = {}
     try:
         with open(file_name, encoding='utf-8') as f:
@@ -111,5 +111,5 @@ def print_result(attendance_info):
 
 
 if __name__ == "__main__":
-    info = load_file("attendance_weekday_500.txt")
+    info = process_file("attendance_weekday_500.txt")
     print_result(info)
