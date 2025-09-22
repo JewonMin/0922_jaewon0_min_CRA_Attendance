@@ -52,6 +52,7 @@ def update_bonus_info(player):
 def get_grade_info(player):
 
 
+
 def load_file(file_name: str):
     attendance_info = {}
     try:
