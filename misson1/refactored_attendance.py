@@ -1,4 +1,4 @@
-from enum import StrEnum
+from enum import Enum, StrEnum
 
 POINTS_MAP = {
     "monday": (0, 1),
@@ -18,6 +18,14 @@ class Day(StrEnum):
     SATURDAY = "saturday"
     SUNDAY = "sunday"
 
+class Grade(Enum):
+    NORMAL = 0
+    SILVER = 2
+    GOLD = 1
+
+THRESHOLD_GOLD = 50
+THRESHOLD_SILVER = 30
+
 def parse_line(line: str):
     parts = line.strip().split()
     if len(parts) == 2:
@@ -31,7 +39,7 @@ def update_basic_info(attendance_info, name, weekday):
             "points" : 0,
             "wednesday_count":0,
             "weekend_count":0,
-            "grade":0
+            "grade":Grade.NORMAL.value
         }
     player = attendance_info[name]
     if weekday in POINTS_MAP:
@@ -50,7 +58,12 @@ def update_bonus_info(player):
         player["points"] += 10
 
 def get_grade_info(player):
-
+    if player["points"] >= THRESHOLD_GOLD:
+        player["grade"] = Grade.GOLD.value
+    elif player["points"] >= THRESHOLD_SILVER:
+        player["grade"] = Grade.SILVER.value
+    else:
+        player["grade"] = Grade.NORMAL.value
 
 
 
@@ -70,6 +83,7 @@ def load_file(file_name: str):
 
     except FileNotFoundError:
         print("파일을 찾을 수 없습니다.")
+        return {}
 
 
 if __name__ == "__main__":
